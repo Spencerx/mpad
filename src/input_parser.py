@@ -1712,7 +1712,7 @@ def parse_what_keyword_wx(aprs_message: str, users_callsign: str, language: str)
     # we will not try to convert the coordinates to an actual
     # human-readable address
     if not found_my_keyword and not kw_err:
-        regex_string = r"\b(grid|mh)\s*([a-zA-Z]{2}[0-9]{2}[a-zA-Z]{0,2})\b"
+        regex_string = r"\b(grid|mh)\s*([a-zA-Z]{2}[0-9]{2}([a-zA-Z]{2})?)\b"
         matches = re.search(
             pattern=regex_string, string=aprs_message, flags=re.IGNORECASE
         )
@@ -1727,7 +1727,7 @@ def parse_what_keyword_wx(aprs_message: str, users_callsign: str, language: str)
 
     # Not run another parser attempt on a keyword-less grid locator
     if not found_my_keyword and not kw_err:
-        regex_string = r"\b([a-zA-Z]{2}[0-9]{2}[a-zA-Z]{0,2})\b"
+        regex_string = r"\b[a-zA-Z]{2}[0-9]{2}([a-zA-Z]{2})?\b"
         matches = re.search(
             pattern=regex_string, string=aprs_message, flags=re.IGNORECASE
         )
@@ -2233,9 +2233,9 @@ def parse_what_keyword_callsign_multi(
     altitude = 0
     lasttime = datetime.min
     what = message_callsign = city = state = county = None
-    zipcode = (
-        country
-    ) = country_code = district = address = street = street_number = None
+    zipcode = country = country_code = district = address = street = street_number = (
+        None
+    )
 
     # First check the APRS message and see if the user has submitted
     # a call sign with the message (we will first check for a call
@@ -2462,9 +2462,9 @@ def parse_what_keyword_whereami(
     altitude = 0
     lasttime = datetime.min
     what = message_callsign = city = state = county = None
-    zipcode = (
-        country
-    ) = country_code = district = address = street = street_number = None
+    zipcode = country = country_code = district = address = street = street_number = (
+        None
+    )
 
     regex_string = r"\b(whereami)\b"
     matches = re.search(pattern=regex_string, string=aprs_message, flags=re.IGNORECASE)
@@ -2892,9 +2892,9 @@ def parse_what_keyword_email_position_report(
     altitude = 0
     lasttime = datetime.min
     what = message_callsign = city = state = county = None
-    zipcode = (
-        country
-    ) = country_code = district = address = street = street_number = None
+    zipcode = country = country_code = district = address = street = street_number = (
+        None
+    )
 
     # check for a keyword - email pattern
     regex_string = (

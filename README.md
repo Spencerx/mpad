@@ -82,6 +82,10 @@ MPAD has been added to KC2SAH's off-grid radio reference (thank you!). [Order yo
 
 [My MPAD instance](https://aprs.fi/#!call=a%2FMPAD&timerange=3600&tail=3600) runs on a Raspberry Pi 4 which also hosts my Pi-Hole server. I have tested MPAD on other less-performant Linux-/Mac-based hardware. If you are a tad patient, you can even run MPAD on a Raspberry Pi Zero W.
 
+## Core APRS Server
+
+In order to make it easier for users to start their own APRS bot instances, [I have published a separate APRS bot framework which can be found on Github](https://github.com/joergschultzelutter/core-aprs-client). Rather than removing unwanted code from mpad, use this modernized APRS bot framework instead.
+
 ## The fine print
 
 - If you intend to host an instance of this program, you must be a licensed radio amateur. BYOP: Bring your own (APRS-IS) passcode. If you don't know what this is, then this program is not for you.
