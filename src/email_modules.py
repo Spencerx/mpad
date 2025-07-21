@@ -392,6 +392,16 @@ def send_email_position_report(response_parameters: dict):
     plaintext_message = plaintext_message.replace("REPLACE_QRZDOTCOM", msg_string)
     html_message = html_message.replace("REPLACE_QRZDOTCOM", msg_string)
 
+    # issue https://github.com/joergschultzelutter/mpad/issues/42
+    # improvement request for Winlink messages
+    # Add a leading "//WL2K R/" string to the outgoing mail's subject line
+    # in case the user tries to send the posmsg mail to a winlink address
+    #
+    # Details: https://winlink.org/HELP
+    #
+    if mail_recipient.lower().endswith("@winlink.org"):
+        subject_message = f"//WL2K R/ {subject_message}"
+
     # Finally, generate the message
     msg = EmailMessage()
     msg["Subject"] = subject_message
@@ -493,7 +503,10 @@ def imap_garbage_collector(smtpimap_email_address: str, smtpimap_email_password:
                         msg=f"Cannot perform IMAP login; user={smtpimap_email_address}, server={mpad_config.mpad_imap_server_address}, port={mpad_config.mpad_imap_server_port}"
                     )
             except Exception as ex:
-                logger.debug(msg=f"IMAP handler has thrown exception. Cause: {ex.__cause__}")
+                logger.debug(
+                    msg=f"IMAP handler has thrown exception. Cause: {ex.__cause__}"
+                )
+
 
 def send_message_via_snmp(
     smtpimap_email_address: str,
@@ -544,16 +557,19 @@ def send_message_via_snmp(
                 code, resp = smtp.login(
                     user=smtpimap_email_address, password=smtpimap_email_password
                 )
-            except (smtplib.SMTPException, smtplib.SMTPAuthenticationError,socket.gaierror, smtplib.SMTPConnectError) as e:
+            except (
+                smtplib.SMTPException,
+                smtplib.SMTPAuthenticationError,
+                socket.gaierror,
+                smtplib.SMTPConnectError,
+            ) as e:
                 output_message = (
                     "Cannot connect to SMTP server or other issue; cannot send mail"
                 )
                 logger.info(msg=output_message)
                 return False, output_message
             except Exception as e:
-                output_message = (
-                    f"Exception {e.__cause__} occurred; cannot send mail"
-                )
+                output_message = f"Exception {e.__cause__} occurred; cannot send mail"
                 logger.info(msg=output_message)
                 return False, output_message
             if code in [235, 503]:
