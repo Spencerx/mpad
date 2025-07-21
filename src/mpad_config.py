@@ -22,7 +22,7 @@ import os
 #
 # Program version
 #
-mpad_version: str = "0.64"
+mpad_version: str = "0.65"
 #
 ###########################
 # Constants, do not change#

@@ -243,6 +243,8 @@ Default language is English - you can specify a different language via ```langua
 
 Note that specifying your own message content (as part of the outgoing mail) is not implemented - I sacrificed this option in favor of longer email addresses.
 
+Any email sent to a `winlink.org` address will have a trailing `//WL2K R/` string attached to its mail subject in order to bypass Winlink's spam filter. See [this page](https://winlink.org/HELP) for additional information on this format string.
+
 ## Radiosonde landing predictions
 
 External service dependencies:
